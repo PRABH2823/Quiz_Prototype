@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile Page</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="navbar">
+        <a href="#">Guhuza</a>
+        <div>
+            <a href="#">Login</a>
+            <a href="#">Register</a>
+            <a href="#">Plans & Services</a>
+            <a href="#">Help</a>
+        </div>
+    </div>
+
+    <header>User Profile Page</header>
+
+    <div class="container">
+        <div class="profile">
+            <div class="avatar">
+                <img src="https://via.placeholder.com/150" alt="User Avatar" id="userAvatar">
+                <input type="file" id="uploadAvatar" accept="image/*">
+                <label for="uploadAvatar">&#9998;</label>
+            </div>
+
+            <div class="profile-details">
+                <div class="form-group">
+                    <label for="userName">Name:</label>
+                    <input type="text" id="userName" placeholder="Enter your name">
+                </div>
+
+                <div class="form-group">
+                    <label for="userEmail">Email:</label>
+                    <input type="email" id="userEmail" placeholder="Enter your email">
+                </div>
+
+                <div class="form-group">
+                    <label for="userDescription">Description:</label>
+                    <textarea id="userDescription" placeholder="Write something about yourself"></textarea>
+                </div>
+            </div>
+
+            <button id="changePassword">Change Password</button>
+
+            <div class="buttons">
+                <button id="saveProfile">Save</button>
+                <button id="cancelChanges">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="passwordPopup" class="popup">
+        <div class="popup-content">
+            <span class="close">&times;</span>
+            <h2>Change Password</h2>
+            <div class="form-group">
+                <label for="oldPassword">Old Password:</label>
+                <input type="password" id="oldPassword" placeholder="Enter old password">
+            </div>
+            <div class="form-group">
+                <label for="newPassword">New Password:</label>
+                <input type="password" id="newPassword" placeholder="Enter new password">
+            </div>
+            <div class="popup-buttons">
+                <button id="submitPassword">Change</button>
+                <button id="cancelPassword">Cancel</button>
+            </div>
+        </div>
+    </div>
+    <div id="passwordPopup" class="popup">
+    <div class="popup-content">
+        <span class="close">&times;</span>
+        <h2>Change Password</h2>
+        
+        <div class="form-group">
+            <label for="oldPassword">Old Password:</label>
+            <div class="password-wrapper">
+                <input type="password" id="oldPassword" placeholder="Enter old password">
+             
+            </div>
+        </div>
+
+       
+
+        <div class="popup-buttons">
+            <button id="submitPassword">Change</button>
+            <button id="cancelPassword">Cancel</button>
+        </div>
+    </div>
+</div>
+
+
+    <script src="script.js"></script>
+</body>
+</html>

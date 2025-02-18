@@ -1,0 +1,1299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quiz Game with Levels</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+    } 
+
+    .level-header {
+      text-align: center;
+      background-color: rgba(85, 72, 156, 0.8);
+      color: #fff;
+      padding: 10px;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .quiz-page {
+      display: flex;
+      max-width: 1000px;
+      margin: 20px auto;
+      background: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Sidebar Section */
+    .question-list {
+      width: 25%;
+      background: rgba(85, 72, 156, 0.8);
+      color: #fff;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .sidebar-category {
+      font-size: 20px;
+      font-weight: bold;
+      text-align: center;
+      text-transform: uppercase;
+      background-color: #444;
+      padding: 8px;
+      border-radius: 5px;
+    }
+
+    .level-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .level-list1 li {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      background:linear-gradient(145deg, #80c8ff, #6faed9);
+      cursor: pointer;
+      color: #fff;
+      margin-left: -35px;
+    }
+    .level-list2 li {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      background:linear-gradient(145deg, #ffb84d, #ff8500);
+      cursor: pointer;
+      color: #fff;
+      margin-left: -35px;
+    }
+    .level-list3 li {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      background:linear-gradient(145deg, #ff6f61, #ff4f43);
+      cursor: pointer;
+      color: #fff;
+      margin-left: -35px;
+    }
+
+    .level-list li:hover {
+      background: #007BFF;
+    }
+
+    .quiz-container {
+      width: 75%;
+      padding: 20px;
+    }
+
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .timer {
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .points {
+      font-size: 18px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .question-number{
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .question{
+      font-size: 18px;
+    }
+
+    .question-container {
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    .options button {
+      width: 90%;
+      margin: 8px 0;
+      padding: 10px;
+      font-size: 18px;
+      border: none;
+      background-color: #dcdcdc;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background 0.3s;
+    }
+
+    .options button:hover {
+      background-color: #c0c0c0;
+    }
+
+    .next {
+      display: block;
+      margin: 20px auto;
+      padding: 10px 20px;
+      font-size: 18px;
+      background: rgba(85, 72, 156, 0.8);
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    
+
+    .button-container {
+    display: flex; /* Makes buttons align in a row */
+    justify-content: center; /* Centers buttons horizontally */
+    gap: 20px; /* Adds space between buttons */
+}
+
+.shareFriend, .oneVone, .quitGame {
+    padding: 10px 20px;
+    font-size: 18px;
+    background: rgba(85, 72, 156, 0.8);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+
+   
+    
+
+    .next:disabled {
+      background: #888;
+      cursor: not-allowed;
+    }
+
+
+   /* Dialog Overlay - Blurred Background */
+.dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7); /* Dark transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(8px); /* Blurred background effect */
+  z-index: 999;
+  transition: opacity 0.3s ease-in-out;
+}
+
+/* Dialog Box Styling */
+.dialog {
+  background: linear-gradient(135deg, #1e3c72, #2a5298); /* Gradient Blue Theme */
+  color: white;
+  padding: 25px;
+  border-radius: 12px;
+  text-align: center;
+  width: 350px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  animation: fadeInUp 0.5s ease-in-out;
+}
+
+/* Start Quiz Button */
+.start-btn {
+  background: #ffcc00; /* Bright Yellow Button */
+  color: #222;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+  box-shadow: 0 4px 10px rgba(255, 204, 0, 0.5);
+}
+
+/* Button Hover Effect */
+.start-btn:hover {
+  background: #ffdb4d; /* Lighter Yellow */
+  box-shadow: 0 6px 15px rgba(255, 204, 0, 0.8);
+  transform: scale(1.05);
+}
+
+/* Smooth Fade-in Animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Level Completion Dialog Overlay */
+.dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(8px);
+  z-index: 999;
+}
+
+/* Dialog Box Styling */
+.dialog {
+  background: linear-gradient(135deg, #1e3c72, #2a5298);
+  color: white;
+  padding: 25px;
+  border-radius: 12px;
+  text-align: center;
+  width: 350px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  animation: fadeInUp 0.5s ease-in-out;
+}
+
+/* Next Level Button */
+.next-level-btn {
+  background: #ffcc00;
+  color: #222;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+  box-shadow: 0 4px 10px rgba(255, 204, 0, 0.5);
+}
+
+.next-level-btn:hover {
+  background: #ffdb4d;
+  box-shadow: 0 6px 15px rgba(255, 204, 0, 0.8);
+  transform: scale(1.05);
+}
+
+/* Share Dialog Styling */
+
+/* Updated Share with Friend Button */
+.share-btn {
+  background: linear-gradient(135deg, #ff7f50, #ff4500); /* Gradient Orange Theme */
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+  margin-top: 10px;
+  box-shadow: 0 4px 10px rgba(255, 69, 0, 0.5);
+}
+
+.share-btn:hover {
+  background: linear-gradient(135deg, #ff6347, #ff0000);
+  box-shadow: 0 6px 15px rgba(255, 69, 0, 0.8);
+  transform: scale(1.05);
+}
+
+.social-icons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.social-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.social-btn img {
+  width: 24px;
+  height: 24px;
+}
+
+.facebook {
+  background: #1877F2;
+  color: white;
+}
+
+.twitter {
+  background: #1DA1F2;
+  color: white;
+}
+
+.instagram {
+  background: #E1306C;
+  color: white;
+}
+
+.social-btn:hover {
+  transform: scale(1.05);
+}
+
+.close-dialog-btn {
+  background-color: #ff4d4d;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 15px;
+  width: 100%;
+  transition: 0.3s;
+}
+
+.close-dialog-btn:hover {
+  background-color: #d93030;
+}
+
+.lock-icon {
+    margin-left: 10px;
+    font-size: 18px;
+  }
+  .locked {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  /* Redeem Time Dialog Box */
+#redeemDialog {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(135deg, #6b52ae, #a782e0); /* Stylish gradient */
+  padding: 25px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.3);
+  color: white;
+  font-family: Arial, sans-serif;
+  z-index: 1000;
+  min-width: 350px;
+  animation: fadeInUp 0.4s ease-in-out;
+}
+
+/* Title Styling */
+#redeemDialog h3 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 12px;
+  color: #ffcc00;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Description Styling */
+#redeemDialog p {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+/* Redeem Button */
+.Redeem { 
+  background: #28a745; /* Green */
+  color: white;
+  padding: 12px 25px;
+  border-radius: 10px;
+  margin: 10px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0px 5px 10px rgba(40, 167, 69, 0.3);
+}
+
+.Redeem:hover {
+  background: #2ebf63;
+  box-shadow: 0px 8px 15px rgba(40, 167, 69, 0.5);
+  transform: scale(1.05);
+}
+
+/* Cancel Button */
+.Cancel {
+  background: #dc3545; /* Red */
+  color: white;
+  padding: 12px 25px;
+  margin: 10px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0px 5px 10px rgba(220, 53, 69, 0.3);
+}
+
+.Cancel:hover {
+  background: #ff5b63;
+  box-shadow: 0px 8px 15px rgba(220, 53, 69, 0.5);
+  transform: scale(1.05);
+}
+
+/* Smooth Fade-in Animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.level-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Space between logo, title, and profile icon */
+    background-color: rgba(85, 72, 156, 0.9); /* Darker background for contrast */
+    padding: 10px 20px;
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+    position: relative;
+}
+
+.guhuza-logo {
+    height: 50px;
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: transform 0.3s ease-in-out, filter 0.3s ease-in-out;
+}
+
+.guhuza-logo:hover {
+    transform: scale(1.1);
+    filter: brightness(1.2);
+}
+
+#levelName {
+    flex-grow: 1;
+    text-align: center;
+}
+
+/* Profile Icon Container */
+.profile-container {
+    position: absolute;
+    right: 20px; /* Ensures it's positioned on the right */
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+/* Profile Icon Styling */
+.profile-icon {
+    width: 40px; /* Adjust size */
+    height: 40px;
+    border-radius: 50%; /* Makes it circular */
+    border: 2px solid white; /* White border for a clean look */
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+/* Hover Effect */
+.profile-icon:hover {
+    transform: scale(1.1); /* Slight zoom effect */
+    box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.5); /* Glow effect */
+}
+
+  </style>
+</head>
+<body>
+  <div class="level-header">
+    <img src="https://guhuza.com/logo/logo_white_large.png" alt="Guhuza Logo" class="guhuza-logo">
+    <span id="levelName">Levels</span>
+    <div class="profile-container">
+      <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Profile" class="profile-icon">
+  </div>
+  </div>
+
+  <div class="quiz-page">
+    <!-- Sidebar for Levels -->
+    <div class="question-list">
+      <div class="sidebar-category">Beginner</div>
+      <ul class="level-list1">
+        <li onclick="fetchQuestions(1, 'Beginner')">Level 1</li>
+        <li onclick="fetchQuestions(2, 'Beginner')">Level 2</li>
+        <li onclick="fetchQuestions(3, 'Beginner')">Level 3</li>
+        <li onclick="fetchQuestions(4, 'Beginner')">Level 4</li>
+      </ul>
+
+      <div class="sidebar-category">Intermediate</div>
+      <ul class="level-list2">
+        <li onclick="fetchQuestions(5, 'Intermediate')">Level 5</li>
+        <li onclick="fetchQuestions(6, 'Intermediate')">Level 6</li>
+        <li onclick="fetchQuestions(7, 'Intermediate')">Level 7</li>
+        <li onclick="fetchQuestions(8, 'Intermediate')">Level 8</li>
+        <li onclick="fetchQuestions(9, 'Intermediate')">Level 9</li>
+      </ul>
+
+      <div class="sidebar-category">Advanced</div>
+      <ul class="level-list3">
+        <li onclick="fetchQuestions(10, 'Advanced')">Level 10</li>
+        <li onclick="fetchQuestions(11, 'Advanced')">Level 11</li>
+        <li onclick="fetchQuestions(12, 'Advanced')">Level 12</li>
+        <li onclick="fetchQuestions(13, 'Advanced')">Level 13</li>
+        <li onclick="fetchQuestions(14, 'Advanced')">Level 14</li>
+        <li onclick="fetchQuestions(15, 'Advanced')">Level 15</li>
+      </ul>
+    </div>
+
+    <!-- Quiz Container -->
+    <div class="quiz-container">
+      <div class="top-bar">
+        <div class="timer">⏰ <span id="questionTimer">20</span> sec</div>
+        <div class="points">Points: <span id="points">0</span></div>
+      </div>
+
+      <div class="question-container">
+        <p class="question-number">Question <span id="questionIndex">1</span></p>
+        <p class="question" id="questionText"></p>
+        <div class="options" id="optionsContainer"></div>
+        <p id="feedback"></p>
+      </div>
+
+      <button class="next" onclick="nextQuestion()" disabled>Next</button>
+
+      <div class="button-container">
+        <button class="shareFriend" onclick="showShareDialog()">Share with Friend</button>
+        <a href="oneVone.html">
+          <button class="oneVone">1v1 Challenge</button>
+      </a>
+  
+      <!-- Quit Game Button -->
+      <a href="MainPage.html">
+          <button class="quitGame">Quit Game</button>
+      </a>
+      </div>
+      
+      
+    </div>
+
+    <!-- Dark overlay to disable background clicks -->
+    <div id="overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(55, 55, 55, 0.7); z-index: 999;"></div>
+
+<!-- Redeem Time Dialog Box -->
+     <div id="redeemDialog" >
+    <h3>⏳ Time's Up!</h3>
+    <p>Do you want to redeem 5 points for +10 seconds?</p>
+    <button class="Redeem" onclick="redeemTime()">✅ Redeem </button> <br> <br> <br> 
+        <button class="Cancel" onclick="cancelRedeem()">❌ Cancel</button>
+    </div>
+
+  </div>
+
+  <!-- Stylish Start Quiz Dialog Box -->
+<div class="dialog-overlay" id="startQuizDialog">
+  <div class="dialog">
+    <h2>Welcome to the Ultimate Quiz!</h2>
+    <p>Test your knowledge and challenge yourself! Click below to start your journey.</p>
+    <button class="start-btn" onclick="startQuiz()">Start Quiz</button>
+  </div>
+</div>
+
+<!-- Level Completion Dialog -->
+<div class="dialog-overlay" id="levelCompletionDialog" style="display: none;">
+  <div class="dialog">
+    <div id="levelCompletionMessage">
+      <h2>Level Completed!</h2>
+      <p>Your score: <strong>0 points</strong></p>
+    </div>
+    <button class="next-level-btn" onclick="startNextLevel()">Start Next Level</button>
+    <button class="share-btn" onclick="showShareDialog()">Share with Friend</button>
+
+<!-- Share with Friend Dialog -->
+<div class="dialog-overlay" id="shareDialog" style="display: none;">
+  <div class="dialog">
+    <h2>📢 Share with Friends</h2>
+    <p>Share Guhuza with your friends and earn <strong>+10 points!</strong></p>
+    
+    <div class="social-icons">
+      <button class="social-btn facebook" onclick="shareOnSocial('facebook')">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook">
+        Share on Facebook
+      </button>
+      <button class="social-btn twitter" onclick="shareOnSocial('twitter')">
+        <img src="https://instantlogodesign.com/blog/wp-content/uploads/2023/01/twitter-bird-icon-1024x538.jpg" alt="Twitter">
+        Share on Twitter
+      </button>
+      <button class="social-btn linkedin" onclick="shareOnSocial('linkedin')">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png" alt="LinkedIn">
+        Share on LinkedIn
+      </button>
+    </div>
+
+    <button class="close-dialog-btn" onclick="closeShareDialog()">Close</button>
+  </div>
+</div>
+  </div>
+</div>
+
+
+
+
+<script>
+  let questions = [];
+  let currentQuestionIndex = 0;
+  let totalPoints = 0; // This will store cumulative points
+  let levelStartPoints = 0; // Points at the start of each level
+  let timer; // Timer variable for countdown
+
+  /**
+   * Fetch questions from API for the selected level
+   */
+   async function fetchQuestions(level, category) {
+    try {
+      console.log(`Fetching questions for Level ${level}...`);
+
+        currentLevel = level; // Update the current level
+        const response = await fetch(`http://localhost:4000/api/v2/quiz?level=${level}`);
+
+        if (!response.ok) {
+          throw new Error(`API request failed with status ${response.status}`);
+
+        }
+        const data = await response.json();
+        if (!data || !data.test || !Array.isArray(data.test.question)) {
+            console.error("Invalid API data format. Expected an array of questions.");
+            alert("Error: Invalid API response format.");
+            return;
+        }
+        questions = shuffleArray(data.test.question);
+        currentQuestionIndex = 0;
+        document.getElementById("levelName").textContent = `${category} - Level ${level}`;
+        levelStartPoints = totalPoints;
+        loadQuestion();
+    } catch (error) {
+        console.error("Error fetching quiz data:", error);
+        alert("Failed to load quiz data. Please check the API.");
+    }
+}
+
+
+  /**
+   * Shuffle an array randomly
+   */
+  function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  }
+   /**
+   * Show the "Share with Friend" dialog
+   */
+   function showShareDialog() {
+    document.getElementById("shareDialog").style.display = "flex";
+  }
+
+  
+
+  /**
+   * Close the Share dialog
+   */
+  function closeShareDialog() {
+    document.getElementById("shareDialog").style.display = "none";
+  }
+
+  /**
+   * Handle sharing on social media
+   * @param {string} platform - Social media platform (Instagram, Facebook, Twitter)
+   */
+  function shareOnSocial(platform) {
+    const shareUrl = "https://guhuza.com/";
+    let fullUrl = "";
+
+    if (platform === "facebook") {
+
+fullUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
+
+} else if (platform === "twitter") {
+
+fullUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}&text=Check%20out%20Guhuza!`;
+
+} else if (platform === "linkedin") {
+
+fullUrl = `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(shareUrl)}&title=Check%20out%20Guhuza!`;
+
+}
+
+
+    window.open(fullUrl, "_blank");
+
+    // Reward the user with 10 bonus points
+    totalPoints += 10;
+    document.getElementById("points").textContent = totalPoints;
+    alert("🎉 You earned +10 bonus points for sharing!");
+
+    closeShareDialog();
+  }
+
+  /**
+   * Load a question from the fetched API data
+   */
+  function loadQuestion() {
+    if (currentQuestionIndex >= questions.length) {
+      showLevelCompletionDialog(); // Show level completion dialog
+      return;
+    }
+
+    const question = questions[currentQuestionIndex];
+ 
+    document.getElementById("questionIndex").textContent = currentQuestionIndex + 1;
+    document.getElementById("questionText").textContent = question.question;
+
+    const optionsContainer = document.getElementById("optionsContainer");
+    optionsContainer.innerHTML = "";
+
+    question.answers.forEach((answer, index) => {
+      const button = document.createElement("button");
+      button.textContent = answer;
+      button.onclick = () => checkAnswer(index, question.test_answer, button);
+      optionsContainer.appendChild(button);
+    });
+
+    document.getElementById("feedback").textContent = "";
+    document.querySelector(".next").disabled = true;
+
+    startTimer();
+  }
+
+  /**
+   * Start the question timer (20 seconds)
+   */
+  function startTimer() {
+    let timeLeft = 20;
+    document.getElementById("questionTimer").textContent = timeLeft;
+
+    clearInterval(timer);
+
+    timer = setInterval(() => {
+      timeLeft--;
+      document.getElementById("questionTimer").textContent = timeLeft;
+
+      if (timeLeft <= 0) {
+        clearInterval(timer);
+        document.getElementById("feedback").textContent = "Time's up!";
+        setTimeout(nextQuestion, 1500);
+      }
+    }, 1000);
+  }
+
+  /**
+   * Validate the selected answer
+   */
+  function checkAnswer(selectedIndex, correctIndex, button) {
+    clearInterval(timer); // Stop the timer once an answer is selected
+
+    let pointsPerQuestion = 2; // Default for Beginner
+
+    if (currentLevel >= 1 && currentLevel <= 4) {
+      pointsPerQuestion = 2; // Beginner levels
+    } else if (currentLevel >= 5 && currentLevel <= 9) {
+      pointsPerQuestion = 3; // Intermediate levels
+    } else if (currentLevel >= 10 && currentLevel <= 15) {
+      pointsPerQuestion = 5; // Advanced levels
+    }
+
+    if (selectedIndex === correctIndex) {
+      button.style.backgroundColor = "lightgreen";
+      document.getElementById("feedback").textContent = `✅ Correct! +${pointsPerQuestion} points`;
+
+      totalPoints += pointsPerQuestion; // Add correct points
+    } else {
+      button.style.backgroundColor = "#FF7F50";
+      document.getElementById("feedback").textContent = `❌ Incorrect! Correct answer: ${questions[currentQuestionIndex].answers[correctIndex]}`;
+
+    }
+
+    document.getElementById("points").textContent = totalPoints;
+    document.querySelectorAll(".options button").forEach(btn => btn.disabled = true);
+    document.querySelector(".next").disabled = false;
+  }
+
+  // Show Start Quiz Dialog when page loads
+  window.onload = function() {
+    document.getElementById("startQuizDialog").style.display = "flex";
+  };
+
+  function startQuiz() {
+    document.getElementById("startQuizDialog").style.display = "none";
+    fetchQuestions(1, "Beginner");
+  }
+
+  function nextQuestion() {
+    currentQuestionIndex++;
+    loadQuestion();
+  }
+// Store unlocked levels (Level 1 is unlocked by default)
+let unlockedLevels = parseInt(localStorage.getItem("unlockedLevels")) || 1;
+let lastCompletedCategory = localStorage.getItem("lastCompletedCategory") || "Beginner";
+
+/**
+ * Determine the starting level based on progress.
+ */
+function getStartingLevel() {
+    if (unlockedLevels < 5) {
+        return { level: 1, category: "Beginner" };
+    } else if (unlockedLevels >= 5 && unlockedLevels < 10) {
+        return { level: 5, category: "Intermediate" };
+    } else if (unlockedLevels >= 10) {
+        return { level: 10, category: "Advanced" };
+    }
+    return { level: 1, category: "Beginner" };
+}
+
+/**
+ * Reset progress if the user quits.
+ */
+function resetProgressOnQuit() {
+    if (unlockedLevels <= 4) {
+        unlockedLevels = 1;
+        lastCompletedCategory = "Beginner";
+    } else if (unlockedLevels <= 9) {
+        unlockedLevels = 5;
+        lastCompletedCategory = "Intermediate";
+    } else {
+        unlockedLevels = 10;
+        lastCompletedCategory = "Advanced";
+    }
+    saveProgress();
+}
+
+/**
+ * Save progress in localStorage.
+ */
+function saveProgress() {
+    localStorage.setItem("unlockedLevels", unlockedLevels);
+    localStorage.setItem("lastCompletedCategory", lastCompletedCategory);
+}
+
+/**
+ * Unlock the next level upon completion.
+ */
+function unlockNextLevel() {
+    if (unlockedLevels < 4) {
+        unlockedLevels++;
+    } else if (unlockedLevels === 4) {
+        unlockedLevels = 5;
+        lastCompletedCategory = "Beginner";
+    } else if (unlockedLevels < 9) {
+        unlockedLevels++;
+    } else if (unlockedLevels === 9) {
+        unlockedLevels = 10;
+        lastCompletedCategory = "Intermediate";
+    } else if (unlockedLevels < 15) {
+        unlockedLevels++;
+    }
+
+    saveProgress();
+    renderLevels();
+}
+
+/**
+ * Update the UI to reflect unlocked levels.
+ */
+function renderLevels() {
+    let levelLists = document.querySelectorAll(".level-list1 li, .level-list2 li, .level-list3 li");
+
+    levelLists.forEach((level, index) => {
+        let levelNumber = index + 1;
+
+        if (levelNumber > unlockedLevels) {
+          level.innerHTML = `Level ${levelNumber} 🔒`;
+
+            level.style.pointerEvents = "none";
+        } else {
+          level.innerHTML = `Level ${levelNumber} ✅`;
+
+            level.style.pointerEvents = "auto";
+            level.onclick = () => fetchQuestions(levelNumber, getCategory(levelNumber));
+        }
+    });
+}
+
+/**
+ * Get category based on level number.
+ */
+function getCategory(level) {
+    if (level >= 1 && level <= 4) return "Beginner";
+    if (level >= 5 && level <= 9) return "Intermediate";
+    if (level >= 10 && level <= 15) return "Advanced";
+    return "Beginner";
+}
+
+/**
+ * Load a question from the fetched API data.
+ */
+function loadQuestion() {
+    if (currentQuestionIndex >= questions.length) {
+        showLevelCompletionDialog();
+        return;
+    }
+
+    const question = questions[currentQuestionIndex];
+
+    document.getElementById("questionIndex").textContent = currentQuestionIndex + 1;
+    document.getElementById("questionText").textContent = question.question;
+
+    const optionsContainer = document.getElementById("optionsContainer");
+    optionsContainer.innerHTML = "";
+
+    question.answers.forEach((answer, index) => {
+        const button = document.createElement("button");
+        button.textContent = answer;
+        button.onclick = () => checkAnswer(index, question.test_answer, button);
+        optionsContainer.appendChild(button);
+    });
+
+    document.getElementById("feedback").textContent = "";
+    document.querySelector(".next").disabled = true;
+    startTimer();
+}
+
+
+///////
+
+
+/**
+ * Start the question timer (20 seconds)
+ */
+function startTimer() {
+    let timeLeft = 20;
+    document.getElementById("questionTimer").textContent = timeLeft;
+
+    clearInterval(timer);
+    timer = setInterval(() => {
+        timeLeft--;
+        document.getElementById("questionTimer").textContent = timeLeft;
+
+        if (timeLeft <= 0) {
+            clearInterval(timer);
+            showRedeemDialog();
+        }
+    }, 1000);
+}
+
+/**
+ * Show "Redeem Time" dialog when time is up and disable background interactions
+ */
+function showRedeemDialog() {
+    document.getElementById("redeemDialog").style.display = "flex";
+    document.getElementById("overlay").style.display = "block"; // Show dark overlay
+}
+
+/**
+ * Redeem points for extra time (10 seconds for 5 points)
+ */
+function redeemTime() {
+    let extraTimeCost = 5; // Cost for extra time
+    let extraTime = 10; // Extra seconds to add
+
+    if (totalPoints >= extraTimeCost) {
+        totalPoints -= extraTimeCost; // Deduct points
+        document.getElementById("points").textContent = totalPoints; // Update points display
+
+        let timeLeft = parseInt(document.getElementById("questionTimer").textContent);
+        timeLeft += extraTime; // Add extra seconds
+        document.getElementById("questionTimer").textContent = timeLeft;
+
+        hideRedeemDialog(); // Close dialog
+        startTimerWithTimeLeft(timeLeft); // Resume timer with new time
+
+        alert(`✅ You bought +10 extra seconds! (Cost: 5 points)`);
+
+    } else {
+        alert("❌ Not enough points! You need at least 5 points to redeem time.");
+    }
+}
+
+/**
+ * Cancel and move to the next question
+ */
+function cancelRedeem() {
+    hideRedeemDialog();
+    nextQuestion();
+}
+
+/**
+ * Hide redeem dialog and enable background interactions
+ */
+function hideRedeemDialog() {
+    document.getElementById("redeemDialog").style.display = "none";
+    document.getElementById("overlay").style.display = "none"; // Hide overlay
+}
+
+/**
+ * Continue timer with remaining time after redeeming
+ */
+function startTimerWithTimeLeft(timeLeft) {
+    clearInterval(timer);
+    timer = setInterval(() => {
+        timeLeft--;
+        document.getElementById("questionTimer").textContent = timeLeft;
+
+        if (timeLeft <= 0) {
+            clearInterval(timer);
+            showRedeemDialog();
+        }
+    }, 1000);
+}
+
+/**
+ * Placeholder function to move to the next question
+ */
+function nextQuestion() {
+    alert("Moving to the next question...");
+    // Add logic to load the next question
+}
+
+
+
+
+/////
+
+
+
+
+/**
+ * Validate the selected answer.
+ */
+ function checkAnswer(selectedIndex, correctIndex, button) {
+    clearInterval(timer); // Stop the timer once an answer is selected
+
+    let pointsPerQuestion = 2; // Default for Beginner
+    if (currentLevel >= 5 && currentLevel <= 9) {
+        pointsPerQuestion = 3; // Intermediate levels
+    } else if (currentLevel >= 10) {
+        pointsPerQuestion = 5; // Advanced levels
+    }
+
+    // Check if the answer is correct
+    if (selectedIndex === parseInt(correctIndex)) { // Ensure correctIndex is compared as a number
+        button.style.backgroundColor = "lightgreen";
+        document.getElementById("feedback").textContent = `✅ Correct! +${pointsPerQuestion} points`;
+
+        totalPoints += pointsPerQuestion; // Add correct points
+    } else {
+        button.style.backgroundColor = "#FF7F50";
+        document.getElementById("feedback").textContent = `❌ Incorrect! Correct answer: ${questions[currentQuestionIndex].answers[correctIndex]}`;
+
+    }
+
+    // Update total points display
+    document.getElementById("points").textContent = totalPoints;
+
+    // Disable all option buttons after selection
+    document.querySelectorAll(".options button").forEach(btn => btn.disabled = true);
+
+    // Enable the "Next" button
+    document.querySelector(".next").disabled = false;
+}
+
+/**
+ * Move to the next question.
+ */
+function nextQuestion() {
+    if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        loadQuestion();
+    } else {
+        showLevelCompletionDialog();
+    }
+}
+
+/**
+ * Show the level completion dialog.
+ */
+function showLevelCompletionDialog() {
+    let levelScore = totalPoints - levelStartPoints;
+
+    document.getElementById("levelCompletionMessage").innerHTML = `
+        <h2>Level ${currentLevel} Completed!</h2>
+        <p>⭐ Level Score: <strong>${levelScore} points</strong></p>
+        <p>🏆 Total Score: <strong>${totalPoints} points</strong></p>
+    `;
+
+
+    
+    document.getElementById("levelCompletionDialog").style.display = "flex";
+    unlockNextLevel();
+}
+
+//badges award 
+function showLevelCompletionDialog() {
+    // Check if required variables exist
+    if (typeof totalPoints === "undefined" || typeof levelStartPoints === "undefined" || typeof currentLevel === "undefined") {
+        console.error("Error: Required variables are not defined.");
+        return;
+    }
+
+    let levelScore = totalPoints - levelStartPoints;
+    let milestoneLevels = [4, 9, 15]; // Levels where badges are awarded
+    let badgeMessage = "";
+    
+    if (milestoneLevels.includes(currentLevel)) {
+        if (currentLevel === 15) {  // Ensure final completion message only at level 15
+            document.getElementById("levelCompletionMessage").innerHTML = `
+                <h2>🎉 You Completed All Levels! 🎉</h2>
+                <p>⭐ Final Score: <strong>${totalPoints} points</strong></p>
+            `;
+        } else {
+            // Badge assignment logic
+            if (currentLevel <= 4) {
+                if (totalPoints >= 80) {
+                    badgeMessage = "🥇 Congratulations! You earned a <strong>Gold Badge</strong>!";
+                } else if (totalPoints >= 70) {
+                    badgeMessage = "🥈 Amazing! You earned a <strong>Silver Badge</strong>!";
+                } else if (totalPoints >= 60) {
+                    badgeMessage = "🥉 Well done! You earned a <strong>Bronze Badge</strong>!";
+                } else {
+                    badgeMessage = "Score more points to earn a badge!";
+                }
+            } else if (currentLevel <= 9) {
+                if (totalPoints >= 150) {
+                    badgeMessage = "🥇 Congratulations! You earned a <strong>Gold Badge</strong>!";
+                } else if (totalPoints >= 125) {
+                    badgeMessage = "🥈 Amazing! You earned a <strong>Silver Badge</strong>!";
+                } else if (totalPoints >= 100) {
+                    badgeMessage = "🥉 Well done! You earned a <strong>Bronze Badge</strong>!";
+                } else {
+                    badgeMessage = "Score more points to earn a badge!";
+                }
+            } else if (currentLevel <= 15) {
+                if (totalPoints >= 300) {
+                    badgeMessage = "🥇 Congratulations! You earned a <strong>Gold Badge</strong>!";
+                } else if (totalPoints >= 250) {
+                    badgeMessage = "🥈 Amazing! You earned a <strong>Silver Badge</strong>!";
+                } else if (totalPoints >= 200) {
+                    badgeMessage = "🥉 Well done! You earned a <strong>Bronze Badge</strong>!";
+                } else {
+                    badgeMessage = "Score more points to earn a badge!";
+                }
+            }
+            
+            document.getElementById("levelCompletionMessage").innerHTML = `
+                <h2>Level ${currentLevel} Completed!</h2>
+                <p>⭐ Level Score: <strong>${levelScore} points</strong></p>
+                <p>🏆 Total Score: <strong>${totalPoints} points</strong></p>
+                <p>${badgeMessage}</p>
+            `;
+        }
+    } else {
+        // Regular level completion message
+        document.getElementById("levelCompletionMessage").innerHTML = `
+            <h2>Level ${currentLevel} Completed!</h2>
+            <p>⭐ Level Score: <strong>${levelScore} points</strong></p>
+            <p>🏆 Total Score: <strong>${totalPoints} points</strong></p>
+        `;
+    }
+
+    // Unlock next level if it's not the last one
+    if (currentLevel < 15) {
+        unlockNextLevel();
+    }
+
+    // Display the dialog box
+    document.getElementById("levelCompletionDialog").style.display = "flex";
+}
+
+
+
+
+/**
+ * Start the next level.
+ */
+function startNextLevel() {
+    document.getElementById("levelCompletionDialog").style.display = "none";
+    levelStartPoints = totalPoints;
+
+    if (currentLevel < 4) {
+        currentLevel++;
+        currentCategory = "Beginner";
+    } else if (currentLevel === 4) {
+        currentLevel = 5;
+        currentCategory = "Intermediate";
+    } else if (currentLevel < 9) {
+        currentLevel++;
+        currentCategory = "Intermediate";
+    } else if (currentLevel === 9) {
+        currentLevel = 10;
+        currentCategory = "Advanced";
+    } else if (currentLevel < 15) {
+        currentLevel++;
+        currentCategory = "Advanced";
+    } else {
+      alert(`🎉 Congratulations! You completed all levels with ${totalPoints} points!`);
+
+        return;
+    }
+
+    fetchQuestions(currentLevel, currentCategory);
+}
+
+/**
+ * Start the quiz properly from the correct level.
+ */
+function startQuiz() {
+    document.getElementById("startQuizDialog").style.display = "none";
+    let { level, category } = getStartingLevel();
+    fetchQuestions(level, category);
+}
+
+// Initialize the game on page load
+document.addEventListener("DOMContentLoaded", () => {
+    renderLevels();
+});
+
+// Ensure progress resets correctly when quitting
+window.addEventListener("beforeunload", function () {
+    resetProgressOnQuit();
+});
+  
+</script>
+
+
+
+</body>
+</html>

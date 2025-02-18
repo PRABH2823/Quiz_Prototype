@@ -1,0 +1,459 @@
+body {
+    background-size: contain;
+    background-position: center;
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    height: 100vh;
+    margin: 0;
+}
+
+.sidebar {
+    background-color: rgba(113, 99, 186, 255);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 60px;
+    height: 100%;
+    transition: width 0.3s ease;
+    z-index: 1000;
+    padding-top: 30px;
+    padding-bottom: 20px;
+    overflow: hidden;
+}
+.sidebar:hover {
+    width: 240px;
+    transition: 0.5s;
+}
+.logo {
+    height: 80px;
+    padding: 16px;
+}
+.menu {
+    height: 88%;
+    position: relative;
+    list-style: none;
+    padding: 0;
+}
+.menu li {
+    padding: 1rem;
+    margin: 8px 0;
+    border-radius: 8px;
+    transition: all 0.5s ease-in-out;
+}
+.menu li:hover,
+.active {
+    background: #e0e0e058;
+}
+.menu a {
+    color: white;
+    font-size: 14px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+.menu a span {
+    overflow: hidden;
+}
+.menu a i {
+    font-size: 1.2rem;
+}
+.logout {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+
+/* Score Display */
+.score {
+    position: fixed;
+    top: 5%;
+    right: 20px;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    color: white;
+    border-radius: 10px;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+}
+
+.score:hover {
+    transform: scale(1.1);
+}
+
+.score .coin {
+    color: gold;
+    font-size: 1.5rem;
+    margin-right: 5px;
+}
+
+/* Main Content */
+.content-area {
+    margin-left: 60px;
+    padding: 40px;
+    transition: margin-left 0.3s ease;
+}
+
+/* Level Cards */
+.level-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    padding: 20px;
+    margin-top: 150px;
+    margin-left: 150px;
+}
+
+.level-card {
+    width: 160px;
+    height: 160px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: white;
+    text-align: center;
+    font-size: 1.2rem;
+}
+
+.level-card:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Level Card - Beginner */
+.beginner {
+    background: linear-gradient(145deg, #80c8ff, #6faed9);
+}
+
+/* Level Card - Intermediate */
+.intermediate {
+    background: linear-gradient(145deg, #ffb84d, #ffa500);
+}
+
+/* Level Card - Advanced */
+.advanced {
+    background: linear-gradient(145deg, #ff6f61, #ff4f43);
+}
+
+/* Header for Level Groups */
+.level-header {
+    color: black;
+    font-weight: bold;
+    text-align: center;
+    font-size: 50px;
+}
+
+.hidden {
+    display: none;
+}
+
+.sidebar {
+    width: 60px;
+    background: rgba(113, 99, 186, 255);
+    height: 100vh;
+    position: fixed;
+    transition: width 0.3s;
+}
+
+.sidebar:hover {
+    width: 200px;
+}
+
+.content-area {
+    margin-left: 200px;
+    transition: margin-left 0.3s, transform 0.3s;
+}
+
+.sidebar:hover ~ .content-area {
+    margin-left: 200px;
+    transform: scale(1.02);
+}
+body {
+    background-size: contain;
+    background-position: center;
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.sidebar {
+    background-color: rgba(113, 99, 186, 255);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 60px;
+    height: 100%;
+    transition: width 0.3s ease;
+    z-index: 1000;
+    padding-top: 30px;
+    padding-bottom: 20px;
+    overflow: hidden;
+}
+
+.sidebar:hover {
+    width: 240px;
+}
+
+.content-area {
+    margin-left: 60px;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: margin-left 0.3s ease;
+    width: 90%;
+    max-width: 1500px;
+}
+
+.score {
+    position: fixed;
+    top: 5%;
+    right: 20px;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    color: white;
+    border-radius: 10px;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+}
+
+.score:hover {
+    transform: scale(1.1);
+}
+
+.score .coin {
+    color: gold;
+    font-size: 1.5rem;
+    margin-right: 10px;
+}
+
+/* Rules Container (Inside Content Area) */
+.rules-container {
+    background: linear-gradient(145deg, #8A2BE2, #5B2C6F); /* Purple gradient */
+    padding: 20px;
+    color: white;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    position: relative;
+    bottom: 0;
+    margin-top: 20px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Space between the boxes */
+}
+
+/* Box Styling Inside Rules Container */
+.rules-box {
+    background: #6A1B9A; /* Dark purple */
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    color: white;
+    font-size: 1rem;
+    text-align: center;
+    flex: 1;
+}
+
+/* Header for the Rules Container */
+.rules-container h3 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/* Level Cards and Sections */
+.level-container {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 15px;
+    margin-top: 30px; /* Reduced margin to bring it closer to the Beginner header */
+}
+
+.level-card {
+    width: 160px;
+    height: 160px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: white;
+    text-align: center;
+    font-size: 1.2rem;
+}
+
+.level-card:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Specific styles for each level card */
+.beginner {
+    background: linear-gradient(145deg, #80c8ff, #6faed9);
+}
+
+.intermediate {
+    background: linear-gradient(145deg, #ffb84d, #ffa500);
+}
+
+.advanced {
+    background: linear-gradient(145deg, #ff6f61, #ff4f43);
+}
+
+.hidden {
+    display: none;
+}
+/* Main Content Area */
+.content-area {
+    margin-left: 60px;
+    padding: 40px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    transition: margin-left 0.3s ease;
+    width: 90%;
+    max-width: 1500px;
+}
+
+/* Wrapper for the levels and rules */
+.level-container-wrapper {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+/* Rules Container (Inside Content Area) */
+.rules-container {
+    background: linear-gradient(145deg, #8A2BE2, #5B2C6F); /* Purple gradient */
+    padding: 20px;
+    color: white;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    width: 25%;
+}
+
+/* Level Cards and Sections */
+.level-container {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 70%;
+}
+
+/* Box Styling Inside Rules Container */
+.rules-box {
+    background: #6A1B9A; /* Dark purple */
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    color: white;
+    font-size: 1rem;
+    text-align: center;
+    flex: 1;
+}
+
+.rules-container {
+    width: 400px; /* Increased width for better readability */
+    height: 550px; /* Increased height for more space */
+    overflow-y: auto; /* Enable scrolling */
+    background: linear-gradient(135deg, #8e2de2, #4a00e0); /* Purple linear gradient */
+    border-radius: 15px; /* Rounded corners */
+    padding: 25px; /* Increased padding for spacing */
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+    margin-top: 20px;
+    font-family: 'Arial', sans-serif;
+    transition: all 0.3s ease;
+    position: absolute; /* Make it positionable */
+    right: 20px; /* Move it towards the right side */
+    top: 50px; /* Move the container higher (adjust this value to your preference) */
+}
+
+.rules-container:hover {
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.15); /* Enhanced shadow on hover */
+}
+
+.rules-container h3 {
+    text-align: center;
+    font-size: 22px; /* Slightly larger font size */
+    color: #fff; /* White text color for contrast */
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.rules-container ul {
+    list-style-type: none;
+    padding-left: 0;
+    font-size: 16px;
+    color: #fff; /* White text for better contrast on purple */
+}
+
+.rules-container li {
+    margin-bottom: 15px; /* Space between list items */
+    line-height: 1.6;
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.rules-container li:hover {
+    color: #FFD700; /* Gold color on hover for better emphasis */
+}
+
+.rules-container li i {
+    margin-right: 10px;
+    font-size: 18px;
+    color: #fff; /* White icons to match text color */
+}
+
+.rules-container li ul {
+    margin-left: 20px;
+    font-size: 14px;
+}
+
+.rules-container li ul li {
+    margin-bottom: 8px;
+    font-weight: 400;
+}
+
+.rules-container p {
+    font-size: 14px;
+    color: #fff; /* White text for description */
+    text-align: center;
+    margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+    .rules-container {
+        width: 90%; /* Adjust for smaller screen sizes */
+        height: 450px; /* Adjust height for smaller screens */
+        right: 10px; /* Move to the right side for mobile devices */
+        top: 30px; /* Adjust for smaller screen sizes */
+    }
+}
+

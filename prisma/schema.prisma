@@ -1,0 +1,60 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Login {
+  id        Int    @id @default(autoincrement())
+  firstname String
+  lastname  String
+  email     String @unique
+  password  String
+
+  // Relations
+  profile     Profile?
+  leaderboard Leaderboard?
+
+  // OneVOne Relation
+  player1Matches OneVOne[] @relation("Player1")
+  player2Matches OneVOne[] @relation("Player2")
+}
+
+model Profile {
+  id          Int     @id @default(autoincrement())
+  userId      Int     @unique
+  username    String
+  email       String  @unique
+  password    String // Store only the hashed password
+  description String
+  avatar      String?
+
+  // Relation
+  user Login @relation(fields: [userId], references: [id])
+}
+
+model Leaderboard {
+  id       Int     @id @default(autoincrement())
+  userId   Int     @unique
+  username String
+  email    String  @unique
+  score    Int
+  trophy   String?
+
+  // Relation
+  user Login @relation(fields: [userId], references: [id])
+}
+
+model OneVOne {
+  id      Int  @id @default(autoincrement())
+  player1 Int
+  player2 Int
+  winner  Int?
+
+  // Relations
+  player1User Login @relation("Player1", fields: [player1], references: [id])
+  player2User Login @relation("Player2", fields: [player2], references: [id])
+}

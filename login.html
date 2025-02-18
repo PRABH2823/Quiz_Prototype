@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In / Sign Up</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(to right, #002244, #000);
+        }
+
+        .container {
+            display: flex;
+            width: 800px;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .left {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: url('https://source.unsplash.com/400x400/?abstract,art') no-repeat center/cover;
+            padding: 10px;
+            color: #16056d;
+            text-align: center;
+        }
+
+        .left img {
+            width: 100%;
+            height: 100%;
+            margin-bottom: 0px;
+        }
+
+        .right {
+            flex: 1;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .right h2 {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .checkbox {
+            display: flex;
+            align-items: center;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background: black;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .social-signup {
+            display: flex;
+            flex-direction: column;
+            margin-top: 10px;
+        }
+
+        .social-signup button {
+            background: #f5f5f5;
+            color: black;
+        }
+
+        .toggle {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .toggle a {
+            color: blue;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="left">
+            <img src="Untitled design.png" alt="Logo">
+        </div>
+        <div class="right">
+            <!-- Sign-up Form -->
+            <div id="signupForm">
+                <h2>Sign Up</h2>
+                <input type="text" id="firstname" placeholder="First name">
+                <input type="text" id="lastname" placeholder="Last name">
+                <input type="email" id="email" placeholder="Email address">
+                <input type="password" id="password" placeholder="Password">
+                <div class="checkbox">
+                    <input type="checkbox" id="terms">
+                    <label for="terms">Accept Terms & Conditions</label>
+                </div>
+                <button onclick="validateSignup()">Join us →</button>
+                <div class="social-signup">
+                    <button>Sign up with Google</button>
+                    <button>Sign up with Apple</button>
+                </div>
+                <div class="toggle">Already have an account? <a onclick="toggleForms()">Sign In</a></div>
+            </div>
+            
+            <!-- Sign-in Form -->
+            <div id="signinForm" style="display: none;">
+                <h2>Sign In</h2>
+                <input type="email" id="signinEmail" placeholder="Email address">
+                <input type="password" id="signinPassword" placeholder="Password">
+                <button onclick="validateSignin()">Sign In →</button>
+                <div class="social-signup">
+                    <button>Sign in with Google</button>
+                    <button>Sign in with Apple</button>
+                </div>
+                <div class="toggle">Don't have an account? <a onclick="toggleForms()">Sign Up</a></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+      async function validateSignup() {
+    const firstname = document.getElementById("firstname").value.trim();
+    const lastname = document.getElementById("lastname").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value.trim();
+    const terms = document.getElementById("terms").checked;
+
+    if (!firstname || !lastname || !email || !password) {
+        alert("Please fill out all fields.");
+        return;
+    }
+
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+        alert("Please enter a valid email address.");
+        return;
+    }
+
+    if (!terms) {
+        alert("You must accept the terms and conditions.");
+        return;
+    }
+
+    console.log("Sending sign-up data to the backend...");
+
+    try {
+        const response = await fetch("http://localhost:4000/auth/signup", { // Corrected route
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ firstname, lastname, email, password }),
+        });
+
+        const data = await response.json();
+        console.log("Response from server:", data);
+
+        if (response.ok) {
+            alert("Sign-up successful!");
+            window.location.href = "MainPage.html";  // Redirect to MainPage
+        } else {
+            alert("Error: " + (data.error || "Something went wrong."));
+        }
+    } catch (error) {
+        console.error("Signup Error:", error);
+        alert("Failed to connect to the server.");
+    }
+}
+
+async function validateSignin() {
+    const email = document.getElementById("signinEmail").value.trim();
+    const password = document.getElementById("signinPassword").value.trim();
+
+    if (!email || !password) {
+        alert("Please enter your email and password.");
+        return;
+    }
+
+    console.log("Sending login data to the backend...");
+
+    try {
+        const response = await fetch("http://localhost:4000/auth/signin", { // Corrected route
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password }),
+        });
+
+        const data = await response.json();
+        console.log("Response from server:", data);
+
+        if (response.ok) {
+            alert("Sign-in successful!");
+            window.location.href = "MainPage.html";  // Redirect after login
+        } else {
+            alert("Error: " + (data.error || "Invalid credentials."));
+        }
+    } catch (error) {
+        console.error("Signin Error:", error);
+        alert("Failed to connect to the server.");
+    }
+}
+
+
+
+
+// Toggle between Sign Up and Sign In forms
+function toggleForms() {
+    const signupForm = document.getElementById("signupForm");
+    const signinForm = document.getElementById("signinForm");
+
+    if (signupForm.style.display === "none") {
+        signupForm.style.display = "block";
+        signinForm.style.display = "none";
+    } else {
+        signupForm.style.display = "none";
+        signinForm.style.display = "block";
+    }
+}
+
+    </script>
+</body>
+</html>
