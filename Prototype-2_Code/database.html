@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Candy Crush Style Levels</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            background-image: url('background.jpg');
+            background-size: cover;
+            background-position: center;
+            font-family: 'Arial', sans-serif;
+        }
+        .game-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .level-path {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 50px;
+        }
+        .level {
+            width: 60px;
+            height: 60px;
+            background: radial-gradient(circle, #ffcc00, #ff9900);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            position: relative;
+            transition: transform 0.3s;
+        }
+        .level:hover {
+            transform: scale(1.2);
+        }
+        .unlocked {
+            background: radial-gradient(circle, #66ff66, #33cc33);
+            animation: bounce 0.5s ease;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <div class="level-path">
+            <div class="level" id="level1" onclick="unlockLevel(1)"><span>1</span></div>
+            <div class="level" id="level2" onclick="unlockLevel(2)"><span>2</span></div>
+            <div class="level" id="level3" onclick="unlockLevel(3)"><span>3</span></div>
+            <div class="level" id="level4" onclick="unlockLevel(4)"><span>4</span></div>
+            <div class="level" id="level5" onclick="unlockLevel(5)"><span>5</span></div>
+        </div>
+    </div>
+
+    <script>
+        function unlockLevel(level) {
+            let levelEl = document.getElementById(level${level});
+            levelEl.classList.add("unlocked");
+        }
+    </script>
+</body>
+</html>

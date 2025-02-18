@@ -1,0 +1,161 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+        <title>Dashboard</title>
+        <link rel="stylesheet" href="MainPageStyle.css"/>
+        <script>
+            window.embeddedChatbotConfig = {
+                chatbotId: "I7LcYmEfeTJxxaSD0UK08",
+                domain: "www.chatbase.co"
+            }
+        </script>
+        <script src="https://www.chatbase.co/embed.min.js" chatbotId="I7LcYmEfeTJxxaSD0UK08" domain="www.chatbase.co" defer></script>
+        <script>
+            function toggleReadMore(id) {
+                var content = document.getElementById(id);
+                var card = content.closest('.payment--card');
+                if (card.classList.contains("expanded")) {
+                    card.classList.remove("expanded");
+                } else {
+                    card.classList.add("expanded");
+                }
+            }
+        </script>
+        <style>
+            .expanded {
+                height: auto !important;
+                padding: 2rem;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="sidebar">
+            <div class="logo"></div>
+            <ul class="menu">
+                <li class="active">
+                    <a href="#">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="profileInfo.html">
+                        <i class="fas fa-user"></i>
+                        <span>Profile</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="level.html">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>Levels</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="login.html">
+                        <i class="fas fa-question-circle"></i>
+                        <span>Register</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="lead.html">
+                        <i class="fas fa-list"></i>
+                        <span>Leaderboard</span>
+                    </a>
+                </li>
+                <li class="logout">
+                    <a href="login.html" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Logout</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="oneVone.html">
+                        <i class="fas fa-rocket"></i>
+                        <span>One VS One</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="card--container">
+            <h3 class="main--title">
+                <img src="https://guhuza.com/logo/logo_black_large.png" alt="Logo" style="height: 40px; margin-right: 10px; vertical-align: middle;">
+                GAMIFIED QUIZ
+            </h3>
+            <div class="card--wrapper">
+                <div class="payment--card light-red">
+                    <div class="card--header">
+                        <div class="amount">
+                            <span class="title">About Us!</span>
+                        </div>
+                        <button onclick="toggleReadMore('aboutUsContent')"><i class="fas fa-list icon dark-red"></i></button>
+                    </div>
+                    <div id="aboutUsContent" class="card-detail">
+                        Guhuza is an innovative Canadian recruiting platform that connects job seekers with employers...
+                    </div>
+                </div>
+                <div class="payment--card light-purple">
+                    <div class="card--header">
+                        <div class="amount">
+                            <span class="title">How to play Quiz!</span>
+                        </div>
+                        <button onclick="toggleReadMore('quizContent')"><i class="fas fa-list icon dark-purple"></i></button>
+                    </div>
+                    <div id="quizContent" class="card-detail">
+                        Learn how to play our exciting quiz and earn rewards!
+                    </div>
+                </div>
+                <div class="payment--card light-green">
+                    <div class="card--header">
+                        <div class="amount">
+                            <span class="title">How to Register!</span>
+                        </div>
+                        <button onclick="toggleReadMore('registerContent')"><i class="fas fa-list icon dark-green"></i></button>
+                    </div>
+                    <div id="registerContent" class="card-detail">
+                        Register easily by following these steps...
+                    </div>
+                </div>
+                <div class="payment--card light-blue">
+                    <div class="card--header">
+                        <div class="amount">
+                            <span class="title">Accept the challenge!</span>
+                        </div>
+                        <button onclick="toggleReadMore('challengeContent')"><i class="fas fa-list icon dark-blue"></i></button>
+                    </div>
+                    <div id="challengeContent" class="card-detail">
+                        Take part in exciting challenges and improve your skills!
+                    </div>
+                </div>
+                <div class="payment--card light-yellow">
+                    <div class="card--header">
+                        <div class="amount">
+                            <span class="title">Join our community!</span>
+                        </div>
+                        <button onclick="toggleReadMore('communityContent')"><i class="fas fa-list icon dark-yellow"></i></button>
+                    </div>
+                    <div id="communityContent" class="card-detail">
+                        Be part of a growing network of learners and professionals.
+                    </div>
+                </div>
+                <div class="payment--card light-orange">
+                    <div class="card--header">
+                        <div class="amount">
+                            <span class="title">Check our blog!</span>
+                        </div>
+                        <button onclick="toggleReadMore('blogContent')"><i class="fas fa-list icon dark-orange"></i></button>
+                    </div>
+                    <div id="blogContent" class="card-detail">
+                        Read our latest articles on career growth and learning.
+                    </div>
+                </div>
+            </div>
+            <div class="animated-container">
+                <div class="animated-circle">Play Game</div>
+                <div class="animated-circle">Get Rewards</div>
+                <div class="animated-circle">Have Job</div>
+            </div>
+        </div>
+    </body>
+</html>

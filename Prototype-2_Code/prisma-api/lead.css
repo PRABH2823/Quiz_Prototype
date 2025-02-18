@@ -1,0 +1,171 @@
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: rgba(113, 99, 186, 255);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    min-height: 100vh;
+    justify-content: center; /* Centers the content horizontally */
+    align-items: center; /* Centers the content vertically */
+}
+
+/* Heading Styles */
+h1 {
+    color: #ffd700;
+    font-size: 3rem;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    text-align: center; /* Ensures the heading is centered */
+}
+
+/* Main container for left and right sections */
+#main-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1200px; /* Set max-width for a better layout */
+    height: 80vh; /* Adjusts the height for consistency */
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.8); /* Slight background to help contrast */
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Left side: Leaderboard */
+#leaderboard-container {
+    flex: 1;
+    padding-right: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Align content within */
+}
+
+#search-input {
+    padding: 10px;
+    width: 100%;
+    max-width: 350px;
+    border: 2px solid #667eea;
+    border-radius: 25px;
+    font-size: 16px;
+    margin-bottom: 20px;
+    outline: none;
+    text-align: center;
+}
+
+/* Table Styles */
+table {
+    width: 100%;
+    margin: 20px 0;
+    border-collapse: collapse;
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+th, td {
+    padding: 15px;
+    border: 1px solid #ddd;
+    text-align: center;
+    color: #333;
+}
+
+th {
+    background-color: #667eea;
+    color: #fff;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tr:hover {
+    background-color: #f1f1f1;
+    transition: background-color 0.3s ease;
+}
+
+/* Back Button Style */
+.back-button {
+    background-color: #667eea;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    position: fixed;  /* Fixed positioning to keep it at the bottom */
+    bottom: 20px;     /* Distance from the bottom */
+    left: 20px;       /* Distance from the left */
+    z-index: 1000;    /* Ensure it's above other content */
+}
+
+.back-button:hover {
+    background-color: #4a64d1; /* Darker shade on hover */
+}
+
+/* Right side: Spline Viewer */
+ #spline-container {
+    flex: 1;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.1); /* Light transparency to match theme */
+    border-radius: 20px; /* Rounded edges to match the main container */
+}
+
+/* Modal Styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 60%;
+    text-align: center;
+    position: relative;
+    max-height: 80%;
+    overflow-y: auto;
+}
+
+#scoreChart {
+    width: 100%;
+    height: 300px;
+    margin-top: 20px;
+}
+
+/* Close Button Style */
+.close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #333;
+}
+
+#logo {
+    width: 200px; /* Adjust size as needed */
+    display: block;
+    margin: 20px 0; /* Space from the top */
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    border-radius: 10px; /* Adding rounded corners for a smooth look */
+}

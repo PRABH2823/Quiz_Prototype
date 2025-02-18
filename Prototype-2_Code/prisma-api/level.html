@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Levels with Chatbot</title>
+
+    <!-- Bootstrap 4 CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- FontAwesome for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="level.css" />
+
+    <script>
+        window.embeddedChatbotConfig = {
+        chatbotId: "I7LcYmEfeTJxxaSD0UK08",
+        domain: "www.chatbase.co"
+        }
+    </script>
+    <script
+    src="https://www.chatbase.co/embed.min.js"
+    chatbotId="I7LcYmEfeTJxxaSD0UK08"
+    domain="www.chatbase.co"
+    defer>
+    </script>
+
+    <style>
+        /* Additional styles for Guhuza logo */
+        .main--title {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            align-items: center;
+            z-index: 999;
+        }
+
+        .main--title img {
+            height: 40px;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="sidebar">
+        <ul class="menu">
+            <li>
+                <a href="MainPage.html">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a href="profileInfo.html">
+                    <i class="fas fa-user"></i>
+                    <span>Profile</span>
+                </a>
+            </li>
+            <li class="active">
+                <a href="#" onclick="showLevels('beginner')">
+                    <i class="fas fa-star"></i>
+                    <span>Beginner</span>
+                </a>
+            </li>
+            <li class="active">
+                <a href="#" onclick="showLevels('intermediate')">
+                    <i class="fas fa-wrench"></i>
+                    <span>Intermediate</span>
+                </a>
+            </li>
+            <li class="active">
+                <a href="#" onclick="showLevels('advanced')">
+                    <i class="fas fa-rocket"></i>
+                    <span>Advanced</span>
+                </a>
+            </li>
+            <li>
+                <a href="login.html">
+                    <i class="fas fa-question-circle"></i>
+                    <span>Register</span>
+                </a>
+            </li>
+            <li class="logout">
+                <a href="login.html" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </li>
+            <li>
+                <a href="oneVone.html">
+                    <i class="fas fa-rocket"></i>
+                    <span>One VS One</span>
+                </a>
+            </li>
+            <li>
+                <a href="lead.html">
+                    <i class="fas fa-list"></i>
+                    <span>Leaderboard</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    
+
+    <!-- Main Content Area -->
+    <div class="content-area">
+        <div class="level-container-wrapper">
+            <!-- Beginner Levels Section -->
+            <div id="beginner" class="level-section hidden">
+                <div class="level-header">Beginner</div>
+                <div class="level-container">
+                    <div class="level-card beginner" onclick="unlockLevel(1)"><a href="index.html"><i class="fas fa-lock"></i><span>Level 1</span></a></div>
+                    <div class="level-card beginner" onclick="unlockLevel(2)"><a href="index.html"><i class="fas fa-lock"></i><span>Level 2</span></a></div>
+                    <div class="level-card beginner" onclick="unlockLevel(3)"><a href="index.html"><i class="fas fa-lock"></i><span>Level 3</span></a></div>
+                    <div class="level-card beginner" onclick="unlockLevel(4)"><a href="index.html"><i class="fas fa-lock"></i><span>Level 4</span></a></div>
+                </div>
+            </div>
+
+            <!-- Intermediate Levels Section -->
+            <div id="intermediate" class="level-section hidden">
+                <div class="level-header">Intermediate</div>
+                <div class="level-container">
+                    <div class="level-card intermediate" onclick="unlockLevel(5)"><i class="fas fa-lock"></i><span>Level 5</span></div>
+                    <div class="level-card intermediate" onclick="unlockLevel(6)"><i class="fas fa-lock"></i><span>Level 6</span></div>
+                    <div class="level-card intermediate" onclick="unlockLevel(7)"><i class="fas fa-lock"></i><span>Level 7</span></div>
+                    <div class="level-card intermediate" onclick="unlockLevel(8)"><i class="fas fa-lock"></i><span>Level 8</span></a></div>
+                    <div class="level-card intermediate" onclick="unlockLevel(9)"><i class="fas fa-lock"></i><span>Level 9</span></div>
+                </div>
+            </div>
+
+            <!-- Advanced Levels Section -->
+            <div id="advanced" class="level-section hidden">
+                <div class="level-header">Advanced</div>
+                <div class="level-container">
+                    <div class="level-card advanced" onclick="unlockLevel(10)"><i class="fas fa-lock"></i><span>Level 10</span></div>
+                    <div class="level-card advanced" onclick="unlockLevel(11)"><i class="fas fa-lock"></i><span>Level 11</span></div>
+                    <div class="level-card advanced" onclick="unlockLevel(12)"><i class="fas fa-lock"></i><span>Level 12</span></div>
+                    <div class="level-card advanced" onclick="unlockLevel(13)"><i class="fas fa-lock"></i><span>Level 13</span></div>
+                    <div class="level-card advanced" onclick="unlockLevel(14)"><i class="fas fa-lock"></i><span>Level 14</span></div>
+                    <div class="level-card advanced" onclick="unlockLevel(15)"><i class="fas fa-lock"></i><span>Level 15</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Rules Container (Inside Content Area) -->
+        <div class="rules-container">
+            <h3>🏆 Game Rules & Guidelines 🏆</h3>
+            <ul>
+                <li>1️⃣ Beginner Level for All – Anyone can jump in and play the Beginner Level. No account required!</li>
+                <li>2️⃣ Unlock More Levels – To access Intermediate and Advanced levels, players must create a Guhuza Account.</li>
+                <li>3️⃣ Challenge Yourself – Each level consists of 10 questions, with 20 seconds to answer each one.</li>
+                <li>4️⃣ Buy Extra Time – Running out of time? Use your earned points to extend the clock!</li>
+                <li>5️⃣ Earn Points – Gain points by answering correctly and sharing the game with friends.</li>
+                <li>6️⃣ Points System:
+                    <ul>
+                        <li>✅ Beginner Level: 2 points per correct answer</li>
+                        <li>✅ Intermediate Level: 3 points per correct answer</li>
+                        <li>✅ Advanced Level: 5 points per correct answer</li>
+                    </ul>
+                </li>
+                <li>7️⃣ Final Answer Matters – Once you select an option, you cannot change your answer.</li>
+                <li>8️⃣ 1V1 Challenge Mode – Battle against other players in an intense rapid-fire quiz! The first to answer correctly wins the points.</li>
+                <li>9️⃣ Level Progression – You must complete each level to unlock the next one.</li>
+                <li>🔟 Earn Achievement Badges – Upon completing Beginner, Intermediate, and Advanced levels, players are awarded badges based on total points earned.</li>
+                <li>1️⃣1️⃣ Quit Anytime – Players have the flexibility to leave the game whenever they want.</li>
+            </ul>
+            <p>🎮 Get ready to test your knowledge, earn rewards, and challenge your friends! 🚀</p>
+        </div>
+        
+    </div>
+
+    <!-- Guhuza Logo at the top right -->
+    <div class="main--title">
+        <img src="https://guhuza.com/logo/logo_black_large.png" alt="Guhuza Logo">
+    </div>
+
+    <!-- Bootstrap and jQuery JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
+
+    <script>
+        // Function to display levels based on the category clicked
+        function showLevels(level) {
+            // Hide all level sections
+            document.querySelectorAll('.level-section').forEach(section => {
+                section.classList.add('hidden');
+            });
+
+            // Show the selected level section
+            document.getElementById(level).classList.remove('hidden');
+        }
+
+        // Unlock level animation
+        function unlockLevel(level) {
+            const levelCard = document.querySelector(`#${level}`);
+            const unlockIcon = document.createElement('i');
+            unlockIcon.classList.add('unlock-icon', 'fas', 'fa-unlock');
+            levelCard.appendChild(unlockIcon);
+        }
+
+        // Set default to show beginner levels on page load
+        showLevels('beginner');
+    </script>
+</body>
+</html>

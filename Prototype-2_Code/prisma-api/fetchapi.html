@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch Quiz Data</title>
+</head>
+<body>
+    <h1>Fetch Quiz Data from Server</h1>
+
+    <label for="level">Select Difficulty:</label>
+    <select id="level">
+        <option value="easy">Easy</option>
+        <option value="medium">Medium</option>
+        <option value="hard">Hard</option>
+    </select>
+
+    <button onclick="fetchData()">Fetch Quiz</button>
+    <pre id="output"></pre>
+
+    <script>
+        function fetchData() {
+            // ✅ Get the selected difficulty level
+            const level = document.getElementById("level").value;
+
+            fetch(`http://localhost:4000/api/quiz?level=${level}`)
+                .then(response => {
+                    if (!response.ok) {
+    throw new Error(`Server returned ${response.status}`);
+}
+
+                    return response.json();
+                })
+                .then(data => {
+                    document.getElementById('output').innerText = JSON.stringify(data, null, 2);
+                    console.log("✅ Data fetched successfully:", data);
+                })
+                .catch(error => {
+                    console.error("🔥 Fetch Error:", error);
+                    document.getElementById('output').innerText = `Failed to fetch data: ${error.message}`;
+
+                });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Guhuza Quiz Game</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        overflow: hidden;
+        flex-direction: column;
+      }
+
+      .level-header {
+        text-align: center;
+        background-color: #556577;
+        color: #fff;
+        padding: 15px 0;
+        font-size: 32px;
+        font-weight: bold;
+        width: 100%;
+        margin-bottom: 20px;
+      }
+
+      .quiz-page {
+        display: flex;
+        justify-content: space-between;
+        max-width: 1200px;
+        width: 100%;
+        height: 90vh;
+        margin:auto;
+        background: #fff;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 0 25px rgba(0, 0, 0, 0.3);
+        padding: 30px;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      .quiz-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        height: 100%;
+        width: 100%;
+      }
+
+      .top-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        margin-bottom: 20px;
+      }
+
+      .player-status {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: #eee;
+        padding: 15px;
+        border-radius: 10px;
+        width: 120px;
+      }
+
+      .player-status .player-icon {
+        font-size: 70px;
+        margin-bottom: 10px;
+      }
+
+      .player-status .player-name {
+        font-size: 18px;
+        font-weight: bold;
+        text-align: center;
+      }
+
+      .points {
+        font-size: 22px;
+        font-weight: bold;
+        margin-top: 10px;
+      }
+
+      .question-container {
+        text-align: center;
+        margin: 30px 0;
+      }
+
+      .question {
+        font-size: 22px;
+        margin-bottom: 20px;
+      }
+
+      .options button {
+        width: 80%;
+        margin: 12px 0;
+        padding: 15px;
+        font-size: 22px;
+        border: none;
+        background-color: #dcdcdc;
+        cursor: pointer;
+        border-radius: 8px;
+        transition: background 0.3s;
+      }
+
+      .options button:hover {
+        background-color: #c0c0c0;
+      }
+
+      .next {
+        display: block;
+        margin: 30px auto;
+        padding: 15px 30px;
+        font-size: 22px;
+        background: green;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background 0.3s;
+      }
+
+      .next:disabled {
+        background: #888;
+        cursor: not-allowed;
+      }
+
+      .timer {
+        font-size: 22px;
+        font-weight: bold;
+        margin-top: 15px;
+      }
+
+      .player-area {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        position: relative;
+        margin-top: 40px;
+      }
+
+      .timer-area {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+      }
+
+      .player-status-left {
+        position: absolute;
+        left: 25px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
+      .player-status-right {
+        position: absolute;
+        right: 25px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
+      .start-button-container {
+        display: flex;
+        justify-content: center;
+        margin-top: 30px;
+      }
+
+      .start-button {
+        padding: 15px 30px;
+        font-size: 24px;
+        background-color: #007BFF;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background 0.3s;
+      }
+
+      .start-button:hover {
+        background-color: #0056b3;
+      }
+
+      @media (max-width: 768px) {
+        .quiz-page {
+          flex-direction: column;
+          height: auto;
+        }
+
+        .player-status {
+          width: 100px;
+        }
+
+        .question-container {
+          width: 90%;
+        }
+
+        .options button {
+          width: 90%;
+        }
+
+        .next {
+          width: 80%;
+        }
+      }
+
+      footer{
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        background: #333;
+        color: white;
+        padding: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="level-header">
+      <span>1 vs 1 </span>
+    </div>
+
+    <div class="quiz-page">
+      <div class="quiz-container">
+        <div class="top-bar">
+          <div class="player-area">
+            <div class="player-status player-status-left">
+              <span class="player-icon">👤</span>
+              <span class="player-name" id="playerName1">Player 1</span>
+              <div class="points" id="points1">Points: 0</div>
+            </div>
+            <div class="timer-area">
+              <div class="timer">Timer: <span id="questionTimer">20</span> sec</div>
+            </div>
+            <div class="player-status player-status-right">
+              <span class="player-icon">👤</span>
+              <span class="player-name" id="playerName2">Player 2</span>
+              <div class="points" id="points2">Points: 0</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="question-container" style="display: none;">
+          <p class="question"></p>
+          <div class="options" id="optionsContainer"></div>
+          <p id="feedback"></p>
+        </div>
+
+        <button class="next" onclick="nextQuestion()" disabled>Next</button>
+
+        <div class="start-button-container">
+          <button class="start-button" onclick="startGame()">Start Game</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let questions = [];
+      let currentQuestionIndex = 0;
+      let isPlayer1 = true; // Flag to check which player is playing
+      let scorePlayer1 = 0;
+      let scorePlayer2 = 0;
+      let questionTimer;
+      let gameStarted = false;
+
+      function fetchQuestions(level) {
+        fetch(`http://localhost:4000/api/v2/quiz?level=${level}`)
+          .then(response => response.json())
+          .then(data => {
+            if (data && data.test && Array.isArray(data.test.question)) {
+              questions = shuffleArray(data.test.question);
+            } else {
+              console.error('Invalid data format:', data);
+            }
+          })
+          .catch(error => console.error('Error fetching quiz data:', error));
+      }
+
+      function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+      }
+
+      function loadQuestion() {
+        const question = questions[currentQuestionIndex];
+        document.querySelector('.question').textContent = question.question;
+        const optionsContainer = document.getElementById('optionsContainer');
+        optionsContainer.innerHTML = '';
+
+        const answers = shuffleArray([...question.answers]);
+        answers.forEach(answer => {
+          const button = document.createElement('button');
+          button.textContent = answer;
+          button.classList.add('option-button');
+          button.onclick = () => checkAnswer(answer, question.test_answer);
+          optionsContainer.appendChild(button);
+        });
+        startTimer();
+      }
+
+      function startTimer() {
+        clearInterval(questionTimer);
+        let timeLeft = 20;
+        document.getElementById('questionTimer').textContent = timeLeft;
+        questionTimer = setInterval(() => {
+          timeLeft--;
+          document.getElementById('questionTimer').textContent = timeLeft;
+          if (timeLeft <= 0) {
+            clearInterval(questionTimer);
+            setTimeout(nextQuestion, 1500); // Proceed to next question after 1.5 seconds
+          }
+        }, 1000);
+      }
+
+      function checkAnswer(selectedAnswer, correctAnswer) {
+        clearInterval(questionTimer);
+
+        if (selectedAnswer === correctAnswer) {
+          if (isPlayer1) {
+            scorePlayer1++;
+          } else {
+            scorePlayer2++;
+          }
+        }
+
+        // Disable all buttons after selection
+        const optionButtons = document.querySelectorAll('.option-button');
+        optionButtons.forEach(btn => {
+          btn.disabled = true;
+        });
+
+        document.querySelector('.next').disabled = false;
+      }
+
+      function nextQuestion() {
+        if (currentQuestionIndex < questions.length - 1) {
+          currentQuestionIndex++;
+          loadQuestion();
+          document.querySelector('.next').disabled = true;
+          isPlayer1 = !isPlayer1; // Switch player turn
+        } else {
+            alert(`Quiz Complete!\nPlayer 1: ${scorePlayer1} points\nPlayer 2: ${scorePlayer2} points`);
+
+        }
+      }
+
+      function startGame() {
+        gameStarted = true;
+        fetchQuestions(2); // Fetch questions for Level 2
+        document.querySelector('.start-button-container').style.display = 'none';
+        document.querySelector('.question-container').style.display = 'block';
+        loadQuestion(); // Load the first question
+      }
+
+      fetchQuestions(2); // Fetch questions for Level 2
+    </script>
+
+  <footer>
+    &copy; 2025 Guhuza Quiz Game
+  </footer>
+  </body>
+  </html>

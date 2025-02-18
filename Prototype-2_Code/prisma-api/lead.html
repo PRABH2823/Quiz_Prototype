@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaderboard</title>
+    <link rel="stylesheet" href="lead.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.68/build/spline-viewer.js"></script>
+</head>
+<body>
+    <div id="main-container">
+        <!-- Left side: Leaderboard -->
+        <div id="leaderboard-container">
+            <img src="https://guhuza.com/logo/logo_white_large.png" alt="Guhuza Logo" id="logo">
+            <h1>Leaderboard</h1>
+            <input type="text" id="search-input" placeholder="Search by name...">
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Name</th>
+                        <th>Player id</th>
+                        <th>Score</th>
+                        <th>Trophies</th> <!-- New Column -->
+                    </tr>
+                </thead>
+                <tbody id="leaderboard-body"></tbody>
+            </table>
+
+            <!-- Back Button -->
+            <button><a href="MainPage.html">Back</a></button>
+        </div>
+
+        <!-- Right side: Spline Viewer -->
+        <div id="spline-container">
+            <spline-viewer url="https://prod.spline.design/NVtFuw5Ov3I5TrPf/scene.splinecode"></spline-viewer>
+        </div>
+    </div>
+
+    <!-- Player Details Popup Modal -->
+    <div id="playerModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="playerName"></h2>
+            <p><strong>Players id:</strong> <span id="playerid"></span></p>
+            <p><strong>Score:</strong> <span id="playerScore"></span></p>
+            <p><strong>Trophies:</strong> <span id="playerTrophies"></span></p>
+            <!-- Chart Container -->
+            <canvas id="scoreChart"></canvas>
+        </div>
+    </div>
+
+    <script src="lead.js"></script>
+</body>
+</html>
